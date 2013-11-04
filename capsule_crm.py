@@ -20,7 +20,10 @@ class CapsuleCRM(object):
             raise ImproperlyConfigured('Missing capsule subdomain name')
         self.auth = requests.auth.HTTPBasicAuth(self.cap_key, self.cap_name)
         self.base_url = BASE_URL % self.cap_name
-        self.headers = {'accept': 'application/json'}
+        self.headers = {
+            'accept': 'application/json',
+            'content-type': 'application/json'
+        }
         self.path = []
         self.qs = {}
         self.method = 'get'
@@ -55,18 +58,31 @@ class CapsuleCRM(object):
         return url
 
     def get(self):
-        self.set_auth()
-        return requests.request('get', self.url, auth=self.auth, headers=self.headers)
+        return requests.request(
+            'get',
+            self.url,
+            auth=self.auth,
+            headers=self.headers,
+            params=self.qs
+        )
 
     def post(self):
-        raise NotImplemented()
-        #self.set_auth()
-        #return request(
-        #    'post',
-        #    self.url,
-        #    data=json.dumps(self.qs),
-        #    headers={'content-type': 'application/json'}
-        #)
+        return requests.request(
+            'post',
+            self.url,
+            auth=self.auth,
+            data=json.dumps(self.qs),
+            headers=self.headers
+        )
+
+    def put(self):
+        return requests.request(
+            'put',
+            self.url,
+            auth=self.auth,
+            data=json.dumps(self.qs),
+            headers=self.headers
+        )
 
     def json(self):
         return getattr(self, self.method)().json()

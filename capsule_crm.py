@@ -57,32 +57,41 @@ class CapsuleCRM(object):
         url = self.base_url + '/'.join(map(str, self.path))
         return url
 
+    @property
+    def request(self):
+        args = (self.method, self.url)
+        kwargs = {
+            'auth': self.auth,
+            'headers': self.headers,
+        }
+        if self.method == 'get':
+            kwargs['params'] = self.qs
+        else:
+            kwargs['data'] = json.dumps(self.qs)
+
+        return requests.request(*args, **kwargs)
+
     def get(self):
-        return requests.request(
-            'get',
-            self.url,
-            auth=self.auth,
-            headers=self.headers,
-            params=self.qs
-        )
+        self.method = 'get'
+        return self.request
 
     def post(self):
-        return requests.request(
-            'post',
-            self.url,
-            auth=self.auth,
-            data=json.dumps(self.qs),
-            headers=self.headers
-        )
+        self.method = 'post'
+        return self.request
 
     def put(self):
-        return requests.request(
-            'put',
-            self.url,
-            auth=self.auth,
-            data=json.dumps(self.qs),
-            headers=self.headers
-        )
+        self.method = 'put'
+        return self.request
 
+    def delete(self):
+        self.method = 'delete'
+        return self.request
+
+    @property
     def json(self):
-        return getattr(self, self.method)().json()
+        """Short cut to json. Only works for GET requests.
+
+        cap.party().json instead of cap.part().get().json
+
+        """
+        return getattr(self, self.method)().json

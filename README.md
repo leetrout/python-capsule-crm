@@ -51,13 +51,13 @@ That will return a new wrapper object representing a request to list all parties
 
 #### Retrieve results ####
 
-We can retrieve the parsed JSON results easily by using the json method
+We can retrieve the parsed JSON results easily by using the json property
 
-    results = parties.json()
+    results = parties.json
 
 All of this could also be written more concisely as
 
-    cap.party().json()
+    cap.party().json
 
 #### Using query string parameters ####
 
@@ -82,7 +82,7 @@ Or /api/party/:id/people
 TODO
 ====
 
- + Add Post/Put/Delete
+ + Test with task creation
  + Add full examples to this readme
  + Add tests
 

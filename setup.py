@@ -9,7 +9,7 @@ See the repo home for usage instructions at
 
 setup(
     name='capsule_crm',
-    version='0.1',
+    version='0.1.1',
     description='Capsule CRM Python API wrapper',
     long_description=long_description,
     author='Lee Trout',

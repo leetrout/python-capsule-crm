@@ -27,6 +27,7 @@ class CapsuleCRM(object):
         self.path = []
         self.qs = {}
         self.method = 'get'
+        self.explicit_qs = {}  # needed for posting with a query string
 
     def __getattr__(self, method):
         # Create a new copy of self
@@ -52,6 +53,13 @@ class CapsuleCRM(object):
         self.qs.update(kwargs)
         return self
 
+    def set_qs(self, data=None, **kwargs):
+        """Set the explicit query string"""
+        if data is not None:
+            kwargs.update(data)
+        self.explicit_qs.update(kwargs)
+        return self
+
     @property
     def url(self):
         url = self.base_url + '/'.join(map(str, self.path))
@@ -68,6 +76,7 @@ class CapsuleCRM(object):
             kwargs['params'] = self.qs
         else:
             kwargs['data'] = json.dumps(self.qs)
+            kwargs['params'] = self.explicit_qs
 
         return requests.request(*args, **kwargs)
 

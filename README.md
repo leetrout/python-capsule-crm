@@ -51,13 +51,13 @@ That will return a new wrapper object representing a request to list all parties
 
 #### Retrieve results ####
 
-We can retrieve the parsed JSON results easily by using the json property
+We can retrieve the parsed JSON results easily by using the json method shortcut (no call to `.get()` required):
 
-    results = parties.json
+    results = parties.json()
 
 All of this could also be written more concisely as
 
-    cap.party().json
+    cap.party().json()
 
 #### Using URL paramters ####
 

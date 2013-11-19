@@ -96,11 +96,9 @@ class CapsuleCRM(object):
         self.method = 'delete'
         return self.request
 
-    @property
-    def json(self):
+    def json(self, *args, **kwargs):
         """Short cut to json. Only works for GET requests.
 
-        cap.party().json instead of cap.part().get().json
-
+        cap.party().json instead of cap.part().get().json()
         """
-        return getattr(self, self.method)().json
+        return getattr(self, self.method)().json(*args, **kwargs)

@@ -16,7 +16,7 @@ setup(
     author_email='leetrout@gmail.com',
     url='https://github.com/leetrout/python-capsule-crm/',
     py_modules=['capsule_crm'],
-    install_requires=['requests'],
+    install_requires=['requests>=2'],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
